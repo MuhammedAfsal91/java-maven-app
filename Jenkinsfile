@@ -35,9 +35,9 @@ pipeline {
                 script {
                     gv.deployApp()
                     
-                }
+               }
             }
-        }
-
+         }
+      }
     }   
 
