@@ -13,14 +13,7 @@ pipeline {
                 }
             }
         }
-    stage("build jar") {
-            steps {
-                script {
-                    echo "building application.."
-                    sh 'mvn_package'
-                }
-            }
-        }
+
         stage("build image") {
             steps {
                 script {
