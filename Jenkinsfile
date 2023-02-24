@@ -5,11 +5,17 @@ pipeline {
         maven 'maven'
         }
     stages {
+        stage("init"){
+            steps{
+                script{
+                    gv = load "script.groovy"
+                }
+            }
+        }
         stage("build jar") {
             steps {
                 script {
-                    echo "eco building application.."
-                    sh 'mvn package'
+                    gv.buildJar()
                 }
             }
         }
@@ -17,11 +23,7 @@ pipeline {
         stage("build image") {
             steps {
                 script {
-                    echo "building the docker image"
-                    withCredentials([usernamePassword(credentialsId:'docker-hub', passwordVariable: 'PASS', usernameVariable: 'USER')]){
-                        sh 'docker build -t muhammedafsal/demo-app:mvn1.1 .'
-                        sh "echo $PASS |  docker login -u $USER --password-stdin"
-                        sh "docker push muhammedafsal/demo-app:mvn1.1"
+                   gv.buildImage()
                     }
                 }
             }
@@ -29,8 +31,8 @@ pipeline {
         stage("deploy") {
             steps {
                 script {
-                    echo "deploying"
-                    //gv.deployApp()
+                    gv.deployApp()
+                    
                 }
             }
         }
