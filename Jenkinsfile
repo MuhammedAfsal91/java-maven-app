@@ -9,7 +9,7 @@ pipeline {
             steps {
                 script {
                     echo "eco building application.."
-                    sh 'mvn_package'
+                    sh 'mvn package'
                 }
             }
         }
